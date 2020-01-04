@@ -1,0 +1,7 @@
+.MenuItemsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    flex: 1;
+}

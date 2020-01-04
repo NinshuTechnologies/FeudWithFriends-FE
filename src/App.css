@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 0.5;
+    background-color: #00a2c0;
+}
+
+.logoText {
+    color: white;
+    font-size: 40;
+    font-weight: bold;
+    /* font-family: 'Segoe UI', Tahomar, Geneva, Verdana, sans-serif; */
+}

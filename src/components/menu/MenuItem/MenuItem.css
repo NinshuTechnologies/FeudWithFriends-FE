@@ -1,0 +1,19 @@
+.MenuItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 25px;
+    background-color: #00a2e3;
+    padding: 15px 50px;
+    color: #ffffff;
+}
+
+.ButtonTextStyle {
+    font-weight: bold;
+    color: #fff;
+    font-size: 18px;
+}
