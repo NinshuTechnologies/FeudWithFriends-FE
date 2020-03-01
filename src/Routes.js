@@ -4,10 +4,11 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import MainMenu from './pages/MainMenu/MainMenu';
 import SoloMode from './pages/SoloMode/SoloMode';
+import SplashScreen from './pages/SplashScreen/SplashScreen';
 
 const AppNavigator = createStackNavigator({
     Home: {
-      screen: MainMenu,
+      screen: SplashScreen,
       navigationOptions: {
         header: null,
       }
@@ -17,7 +18,13 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null,
           }
-    }
+    },
+    MainMenu: {
+      screen: MainMenu,
+      navigationOptions: {
+          header: null,
+        }
+  }
   });
 
 export default createAppContainer(AppNavigator);

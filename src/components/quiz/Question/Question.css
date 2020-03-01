@@ -1,0 +1,26 @@
+.QuestionContainerIos {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    padding: 8px;
+    width: 88%;
+    align-self: center;
+}
+
+.QuestionContainerAndroid {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    padding: 8px;
+    width: 85%;
+    align-self: center;
+}
+
+.QuestionText {
+    font-size: 18;
+    justify-content: center;
+    color: white;
+    font-family: 'Montserrat-Light';
+}

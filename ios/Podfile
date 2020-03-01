@@ -29,6 +29,10 @@ target 'feud_with_friends_mobile' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'feud_with_friends_mobileTests' do
     inherit! :search_paths
     # Pods for testing

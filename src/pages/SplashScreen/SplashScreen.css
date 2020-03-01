@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    flex: 1;
+    color: white;
+}
+
+.SplashText {
+    color: white;
+    font-size: 22px;
+
+}

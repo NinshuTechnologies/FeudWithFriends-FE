@@ -1,0 +1,11 @@
+.TimerContainer {
+    padding: 5px;
+    border: 1px solid white;
+    background-color: white;
+}
+
+.TimerText {
+    color: red;
+    font-size: 15px;
+    font-family: 'Montserrat-Regular';
+}
