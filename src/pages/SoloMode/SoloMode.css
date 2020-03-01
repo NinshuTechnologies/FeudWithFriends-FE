@@ -1,5 +1,19 @@
 .container {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    background-color: teal;
+    align-items: center;
+    /* background-color: #ff4e00; */
+    /* background-color: #00a2c0; */
+    
 }
+
+.Title {
+    font-size: 20;
+    font-family: 'Montserrat-Thin';
+    margin-bottom: 10px;
+}
+
+.linearGradient {
+    flex: 1
+  }

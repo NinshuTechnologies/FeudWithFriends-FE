@@ -1,0 +1,16 @@
+.AnswerInputContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid white;
+    padding: 15px;
+    margin-top: auto;
+    margin-bottom: 5px;
+    width: 97%;
+    border-radius: 15px;
+    background-color: #fff;
+}
+
+.Text {
+    color: #000;
+}

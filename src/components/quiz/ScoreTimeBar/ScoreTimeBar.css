@@ -1,0 +1,24 @@
+.Container {
+    flex-direction: row;
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 5px 5px 30px 30px;
+    /* border-bottom: 1px solid purple; */
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.ProfileCircle {
+    padding: 3px;
+    margin-left: 2px;
+    margin-right: 2px;
+    height: 40px;
+    width: 40px;
+    border: 1px solid white;
+    border-radius: 110px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}

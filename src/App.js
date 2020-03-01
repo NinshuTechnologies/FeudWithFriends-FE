@@ -15,10 +15,11 @@ import {
 } from 'react-native';
 import styles from './App.css';
 import AppNavigator from './Routes';
+import SplashScreen from './pages/SplashScreen/SplashScreen';
 
 const App = () => {
   return (
-        <AppNavigator/>
+      <AppNavigator/>
   );
 };
 
