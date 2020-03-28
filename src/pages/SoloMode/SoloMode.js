@@ -108,7 +108,6 @@ class SoloMode extends Component {
 		if (!this.state.questionObj.id) this.getQuestionAndAnswers();
 	}
 
-
 	handleAnswerSubmit = (userAnswer) => {
 
         let uri = `${endpoints.local}answer/${this.state.questionObj.id}/${userAnswer}`;
@@ -123,8 +122,8 @@ class SoloMode extends Component {
                 answerListCopy.forEach((answer,index)=> {
                     if(answer.displayAnswer == actualDisplayAnswer) {
                         if(answer.isAnswered) {
-                            //write logic to display message that this answer is already guessed
-                            alert("Already guessed this one! Try another one.");
+							//write logic to display message that this answer is already guessed
+							Toast.showWithGravity("Already guessed this one! Try another one.", Toast.SHORT, Toast.CENTER);
                         } else {
                             answer.isAnswered=true;
                             scoreGained=answer.points
@@ -142,6 +141,8 @@ class SoloMode extends Component {
 				// alert('Wrong Answer!');
 				this.fireStrikeX();
 			});
+
+			//clearing out the answer input
 	}
 
 	turnOffResetTimer = ()=> {
@@ -151,18 +152,15 @@ class SoloMode extends Component {
 	}
 
 	fireStrikeX = ()=> {
-		// if(this.state.strikes>=3) {
-		// 	this.setState({
-		// 		displayStrike: true,
-		// 		strikes:0
-		// 	});
-		// }
-		// this.setState({
-		// 	strikes: this.state.strikes+1
-		// })
+
 		this.setState({
 			strikes: this.state.strikes+1,
-			displayStrike: true
+			displayStrike: true,
+			resetTimer: true
+		}, ()=> {
+			if(this.state.strikes<3 && this.state.displayStrike) {
+				Toast.showWithGravity(`X STRIKE ${this.state.strikes}`, Toast.SHORT, Toast.CENTER);
+			} 
 		})
 		if(this.state.strikes>=3) {
 			// Toast.showWithGravity('You Striked OUT!!!', Toast.LONG, Toast.CENTER)
@@ -208,8 +206,6 @@ class SoloMode extends Component {
                     </View>
 
 					{/* Modal for Strike */}
-					{this.state.strikes<3 && this.state.displayStrike && Toast.showWithGravity(`X STRIKE ${this.state.strikes}`, Toast.SHORT, Toast.CENTER) }
-
 					{ this.state.strikes>=3 && this.state.displayStrike &&
 
 						<Modal isVisible={true}
