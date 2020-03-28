@@ -21,7 +21,7 @@ const Answer = (props)=> {
                 </View> 
                 :
                 <View className={styles.UnansweredContainer}>
-                    <Text className={styles.Text}>{props.id}</Text>
+                    <Text className={styles.TextUnanswered}>{props.id}</Text>
                 </View>
 
                 }
