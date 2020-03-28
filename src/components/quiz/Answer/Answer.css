@@ -28,3 +28,10 @@
     font-family: 'Montserrat-Light';
     color: #000;
 }
+
+.TextUnanswered {
+    font-size: 17px;
+    text-align: center;
+    font-family: 'Play-Bold';
+    color: #000;
+}
