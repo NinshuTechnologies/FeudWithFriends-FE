@@ -39,6 +39,7 @@ class SoloMode extends Component {
 			scoreMultiplier: 100,
 			strikes:0,
 			displayStrike: false,
+			shouldStartTimer: false,
 			resetTimer: false,
 			userDataObj: {
 				firstName: null,
@@ -89,7 +90,8 @@ class SoloMode extends Component {
 								id: uid,
 								question: question
 							},
-							answerList: answerObjForState
+							answerList: answerObjForState,
+							shouldStartTimer: true
 						});
 					})
 					.catch(e => {
@@ -102,7 +104,7 @@ class SoloMode extends Component {
 	}
 
 	componentDidMount() {
-		if (!this.state.questionObj.id) this.getQuestionAndAnswers()
+		if (!this.state.questionObj.id) this.getQuestionAndAnswers();
 	}
 
 
@@ -186,10 +188,10 @@ class SoloMode extends Component {
                 <SafeAreaView className={styles.container}>
 
                     <View style={{height: '25%', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
-                        <ScoreTime resetTimer={this.state.resetTimer} turnOffResetTimer={this.turnOffResetTimer} currentScore={this.state.currentScore}></ScoreTime>
-                        {this.state.questionObj!==null &&
+                        <ScoreTime shouldStartTimer={this.state.shouldStartTimer} resetTimer={this.state.resetTimer} turnOffResetTimer={this.turnOffResetTimer} currentScore={this.state.currentScore}></ScoreTime>
+                		{this.state.questionObj!==null &&
                             <Question questionObj={this.state.questionObj}/>
-                        }   
+						}   
                     </View>
 
                     <View style={{height: '60%', width: '100%', alignItems: 'center'}}>
