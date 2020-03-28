@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import styles from './Timer.css'
 
-class Timer extends Component {
+const TIME_PER_QUESTION=60;
 
+class Timer extends Component {
+    
     timer=null;
     constructor(props) {
         super(props);
         this.state = {
-            // shouldStartTimer: false,
-            timeLeft: 60
+            timeLeft: TIME_PER_QUESTION
         };
     }
 
@@ -23,17 +24,18 @@ class Timer extends Component {
     }
 
     componentDidMount() {
-        // if(this.state.shouldStartTimer) {
             this.handleTimerStart();
-        // }
     }
 
     componentDidUpdate(prevProps, nextState) {
-        if(nextState.timeLeft<=1) {
+        if(nextState.timeLeft==1) {
             clearInterval(this.timer);
             //invoke the strike animation and update the strike state
-            alert("Time up! You need more speed.");
-            // this.props.fireStrikeX();
+            // alert("Time up! You need more speed.");
+            this.props.fireStrikeX();
+            this.setState({
+                timeLeft: TIME_PER_QUESTION
+            }, this.handleTimerStart());
         }
         if(this.props.resetTimer!=prevProps.resetTimer && this.props.resetTimer) {
             this.setState({

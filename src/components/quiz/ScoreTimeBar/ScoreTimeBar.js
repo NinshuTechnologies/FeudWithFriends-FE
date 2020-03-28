@@ -31,7 +31,7 @@ class ScoreTimeBar extends Component {
                 {/* Timer */}
                 {this.props.shouldStartTimer &&
                 <View>
-                    <Timer resetTimer={this.props.resetTimer} turnOffResetTimer={this.props.turnOffResetTimer}/>
+                    <Timer fireStrikeX={this.props.fireStrikeX} resetTimer={this.props.resetTimer} turnOffResetTimer={this.props.turnOffResetTimer}/>
                 </View>
                 }       
 

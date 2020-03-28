@@ -20,6 +20,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import endpoints from '../../endpoints.js';
+import Toast from 'react-native-simple-toast';
 
 
 class SoloMode extends Component {
@@ -164,7 +165,7 @@ class SoloMode extends Component {
 			displayStrike: true
 		})
 		if(this.state.strikes>=3) {
-			alert("You striked out");
+			// Toast.showWithGravity('You Striked OUT!!!', Toast.LONG, Toast.CENTER)
 			// this.setState({
 			// 	strikes:0
 			// });
@@ -188,7 +189,11 @@ class SoloMode extends Component {
                 <SafeAreaView className={styles.container}>
 
                     <View style={{height: '25%', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
-                        <ScoreTime shouldStartTimer={this.state.shouldStartTimer} resetTimer={this.state.resetTimer} turnOffResetTimer={this.turnOffResetTimer} currentScore={this.state.currentScore}></ScoreTime>
+						<ScoreTime shouldStartTimer={this.state.shouldStartTimer}
+						 resetTimer={this.state.resetTimer} 
+						 turnOffResetTimer={this.turnOffResetTimer} 
+						 currentScore={this.state.currentScore} fireStrikeX={this.fireStrikeX}></ScoreTime>
+						 
                 		{this.state.questionObj!==null &&
                             <Question questionObj={this.state.questionObj}/>
 						}   
@@ -203,16 +208,20 @@ class SoloMode extends Component {
                     </View>
 
 					{/* Modal for Strike */}
-					{this.state.displayStrike && 
+					{this.state.strikes<3 && this.state.displayStrike && Toast.showWithGravity(`X STRIKE ${this.state.strikes}`, Toast.SHORT, Toast.CENTER) }
+
+					{ this.state.strikes>=3 && this.state.displayStrike &&
+
 						<Modal isVisible={true}
-							onBackdropPress={() => this.setState({displayStrike: false})}
+							onBackdropPress={() => this.setState({displayStrike: false, strikes: 0})}
 							deviceWidth={this.deviceWidth}
     						deviceHeight={this.deviceHeight}>
-							<View style={{ flex: 0.4, backgroundColor: 'white', display: 'flex', justifyContent: "center", alignItems: "center" }}>
-								<Text style={{color: 'red', fontSize: 70, fontFamily: 'Montserrat-Bold'}}> STRIKE {this.state.strikes} </Text>
+							<View style={{ flex: 0.3, backgroundColor: 'white', display: 'flex', justifyContent: "center", alignItems: "center" }}>
+								<Text style={{textAlign: 'center',  color: 'red', fontSize: 40, fontFamily: 'Montserrat-Bold'}}> STRIKED OUT! </Text>
+								<Text style={{textAlign: 'center',  color: 'red', fontSize: 45, fontFamily: 'Montserrat-Light'}}> XXX </Text>
 							</View>
 						</Modal>
-					}
+					}			
                 </SafeAreaView>
             </LinearGradient>
 
