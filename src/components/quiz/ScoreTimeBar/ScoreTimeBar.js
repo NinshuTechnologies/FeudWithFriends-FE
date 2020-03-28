@@ -8,10 +8,16 @@ class ScoreTimeBar extends Component {
     timer=null;
     constructor(props) {
         super(props);
-        this.state = {
-            shouldStartTimer: false,
-        };
     }
+
+    componentDidUpdate(prevProps, nextState) {
+        if(this.props.shouldStartTimer!= prevProps) {
+            this.state = {
+                shouldStartTimer: this.props.shouldStartTimer,
+            };
+        }
+    }
+
 
     render() {
         return (
@@ -23,7 +29,7 @@ class ScoreTimeBar extends Component {
                 </View>
 
                 {/* Timer */}
-                {this.state.shouldStartTimer &&
+                {this.props.shouldStartTimer &&
                 <View>
                     <Timer resetTimer={this.props.resetTimer} turnOffResetTimer={this.props.turnOffResetTimer}/>
                 </View>
@@ -32,7 +38,7 @@ class ScoreTimeBar extends Component {
 
                 {/* User Score */}
                 <View style={{border: '1px solid #000'}}>
-                    <TouchableOpacity title="start" onPress={()=> {this.setState({shouldStartTimer: true})}}>
+                    <TouchableOpacity title="start">
                             <View className={styles.ProfileCircle}>
                                 <Text style={{fontSize: 15, color: '#000'}}>250</Text>
                             </View>

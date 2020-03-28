@@ -23,20 +23,19 @@ class Timer extends Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount called, state = ", this.state.shouldStartTimer, this.state.timeLeft);
         // if(this.state.shouldStartTimer) {
             this.handleTimerStart();
         // }
     }
 
-    componentDidUpdate(nextProps, nextState) {
+    componentDidUpdate(prevProps, nextState) {
         if(nextState.timeLeft<=1) {
             clearInterval(this.timer);
             //invoke the strike animation and update the strike state
             alert("Time up! You need more speed.");
             // this.props.fireStrikeX();
         }
-        if(this.props.resetTimer!=nextProps.resetTimer && this.props.resetTimer) {
+        if(this.props.resetTimer!=prevProps.resetTimer && this.props.resetTimer) {
             this.setState({
                 timeLeft: 60
             });
