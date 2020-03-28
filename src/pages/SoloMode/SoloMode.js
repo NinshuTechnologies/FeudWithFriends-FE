@@ -5,7 +5,8 @@ import {
 	View,
 	Text,
 	SafeAreaView,
-	KeyboardAvoidingView
+	KeyboardAvoidingView,
+	Dimensions
 } from 'react-native';
 import ScoreTime from '../../components/quiz/ScoreTimeBar/ScoreTimeBar';
 import {
@@ -17,11 +18,16 @@ import styles from './SoloMode.css';
 import AnswerInput from '../../components/quiz/AnswerInput/AnswerInput';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
+import Modal from 'react-native-modal';
+import endpoints from '../../endpoints.js';
+
 
 class SoloMode extends Component {
 
 	constructor(props) {
 		super(props);
+		this.deviceWidth = Dimensions.get('window').width;
+		this.deivceHeight = Dimensions.get('window').height;
 		this.state = {
 			answerList: [],
 			questionObj: {
@@ -32,6 +38,8 @@ class SoloMode extends Component {
 			round: 1,
 			scoreMultiplier: 100,
 			strikes:0,
+			displayStrike: false,
+			resetTimer: false,
 			userDataObj: {
 				firstName: null,
 				lastName: null,
@@ -44,15 +52,17 @@ class SoloMode extends Component {
 	}
 
 	getQuestionAndAnswers = () => {
-		axios.get(`http://192.168.29.247:8080/question`)
+		axios.get(`${endpoints.local}question`)
 			.then(resp => {
+				if(!resp.data || !resp.data.uid) {throw new console.error("Question not found", `Response from api = ${JSON.stringify(resp)}`);}
 				const {
 					uid,
 					question
 				} = resp.data;
-				axios.get(`http://192.168.29.247:8080/answer/questionId/${uid}`)
+				axios.get(`${endpoints.local}answer/questionId/${uid}`)
 					.then(resp => {
 						let answers = resp.data;
+						if(!answers) {throw new console.error("No answers found for this question!");}
 						let answerObjForState = [];
 
 						answers.forEach((ans, index) => {
@@ -98,7 +108,7 @@ class SoloMode extends Component {
 
 	handleAnswerSubmit = (userAnswer) => {
 
-        let uri = `http://192.168.29.247:8080/answer/${this.state.questionObj.id}/${userAnswer}`;
+        let uri = `${endpoints.local}answer/${this.state.questionObj.id}/${userAnswer}`;
         // alert(uri);
         axios.get(uri)
 			.then(resp => {
@@ -120,13 +130,44 @@ class SoloMode extends Component {
                 });
                 this.setState({
                     answerList: answerListCopy,
-                    score: this.state.score + scoreGained
+					score: this.state.score + scoreGained,
+					resetTimer: true
                 });
                 
 			})
 			.catch(e => {
-				alert('Wrong Answer!');
+				// alert('Wrong Answer!');
+				this.fireStrikeX();
 			});
+	}
+
+	turnOffResetTimer = ()=> {
+		this.setState({
+			resetTimer: false
+		})
+	}
+
+	fireStrikeX = ()=> {
+		// if(this.state.strikes>=3) {
+		// 	this.setState({
+		// 		displayStrike: true,
+		// 		strikes:0
+		// 	});
+		// }
+		// this.setState({
+		// 	strikes: this.state.strikes+1
+		// })
+		this.setState({
+			strikes: this.state.strikes+1,
+			displayStrike: true
+		})
+		if(this.state.strikes>=3) {
+			alert("You striked out");
+			// this.setState({
+			// 	strikes:0
+			// });
+		}
+
 	}
 
 
@@ -145,7 +186,7 @@ class SoloMode extends Component {
                 <SafeAreaView className={styles.container}>
 
                     <View style={{height: '25%', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
-                        <ScoreTime currentScore={this.state.currentScore}></ScoreTime>
+                        <ScoreTime resetTimer={this.state.resetTimer} turnOffResetTimer={this.turnOffResetTimer} currentScore={this.state.currentScore}></ScoreTime>
                         {this.state.questionObj!==null &&
                             <Question questionObj={this.state.questionObj}/>
                         }   
@@ -158,6 +199,18 @@ class SoloMode extends Component {
                     <View style={{height: '15%', width: '100%', alignItems: 'center'}}>
                         <AnswerInput handleAnswerSubmit={this.handleAnswerSubmit}/>
                     </View>
+
+					{/* Modal for Strike */}
+					{this.state.displayStrike && 
+						<Modal isVisible={true}
+							onBackdropPress={() => this.setState({displayStrike: false})}
+							deviceWidth={this.deviceWidth}
+    						deviceHeight={this.deviceHeight}>
+							<View style={{ flex: 0.4, backgroundColor: 'white', display: 'flex', justifyContent: "center", alignItems: "center" }}>
+								<Text style={{color: 'red', fontSize: 70, fontFamily: 'Montserrat-Bold'}}> STRIKE {this.state.strikes} </Text>
+							</View>
+						</Modal>
+					}
                 </SafeAreaView>
             </LinearGradient>
 
