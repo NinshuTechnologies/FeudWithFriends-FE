@@ -5,46 +5,13 @@ import Timer from './Timer/Timer';
 
 class ScoreTimeBar extends Component {
 
-    timer=0;
+    timer=null;
     constructor(props) {
         super(props);
         this.state = {
             shouldStartTimer: false,
-            timeLeft: 60
         };
     }
-
-    handleTimerStart = ()=> {
-
-        this.timer = setInterval(function () {
-            this.setState({
-                timeLeft: this.state.timeLeft-1
-            });
-        }.bind(this), 1000)
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        if(this.state.shouldStartTimer !== nextState.shouldStartTimer) {
-
-            if(nextState.shouldStartTimer) {
-                this.timer = setInterval(function () {
-                    this.setState({
-                        timeLeft: this.state.timeLeft-1
-                    });
-                }.bind(this), 1000);
-            } else {
-                //reset timer
-                // this.setState({
-                //     timeLeft: 60
-                // });
-            }
-
-        }
-        if(nextState.timeLeft<=30) {
-            clearInterval(this.timer);
-        }
-    }
-
 
     render() {
         return (
@@ -56,9 +23,11 @@ class ScoreTimeBar extends Component {
                 </View>
 
                 {/* Timer */}
+                {this.state.shouldStartTimer &&
                 <View>
-                    <Timer timeLeft={this.state.timeLeft} resetTimer="dfdf"/>
+                    <Timer resetTimer={this.props.resetTimer} turnOffResetTimer={this.props.turnOffResetTimer}/>
                 </View>
+                }       
 
 
                 {/* User Score */}
