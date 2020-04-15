@@ -109,6 +109,10 @@ class SoloMode extends Component {
 	}
 
 	handleAnswerSubmit = (userAnswer) => {
+		if(userAnswer.trim() == "") {
+			Toast.showWithGravity("Come on! You can do it. THINK HARDER", 1, Toast.CENTER);
+			return;
+		}
 
         let uri = `${endpoints.local}answer/${this.state.questionObj.id}/${userAnswer}`;
         // alert(uri);
@@ -151,23 +155,48 @@ class SoloMode extends Component {
 		})
 	}
 
-	fireStrikeX = ()=> {
+	removeModalAndShowAnswers = ()=> {
+
+		return new Promise(resolve=> setTimeout(()=> {
+			this.setState({
+				displayStrike: false
+			});
+			//todo: play sound for "these are the answers you missed!"
+			let newAnswers = [...this.state.answerList];
+
+			let promises = newAnswers.map((answer,index)=> {
+				return new Promise(resolve2=> setTimeout(()=> {
+					answer.isAnswered = true;
+					this.setState({
+						answerList: newAnswers
+					});
+					resolve2("Done2")
+				}, 1500*index+200));
+			});
+
+			Promise.all([...promises]).then(()=>{
+				alert('Hi All Answers are revieled');
+				resolve("done");
+			});
+
+		}, 1500));
+	}
+
+	 fireStrikeX = ()=> {
 
 		this.setState({
 			strikes: this.state.strikes+1,
 			displayStrike: true,
 			resetTimer: true
-		}, ()=> {
+		}, async ()=> {
 			if(this.state.strikes<3 && this.state.displayStrike) {
 				Toast.showWithGravity(`X STRIKE ${this.state.strikes}`, Toast.SHORT, Toast.CENTER);
 			} 
-		})
-		if(this.state.strikes>=3) {
-			// Toast.showWithGravity('You Striked OUT!!!', Toast.LONG, Toast.CENTER)
-			// this.setState({
-			// 	strikes:0
-			// });
-		}
+			if(this.state.strikes>=3) {
+				this.setState({shouldStartTimer: false});
+				await this.removeModalAndShowAnswers();
+			}
+		});
 
 	}
 
@@ -206,18 +235,17 @@ class SoloMode extends Component {
                     </View>
 
 					{/* Modal for Strike */}
-					{ this.state.strikes>=3 && this.state.displayStrike &&
 
-						<Modal isVisible={true}
-							onBackdropPress={() => this.setState({displayStrike: false, strikes: 0})}
-							deviceWidth={this.deviceWidth}
-    						deviceHeight={this.deviceHeight}>
-							<View style={{ flex: 0.3, backgroundColor: 'white', display: 'flex', justifyContent: "center", alignItems: "center" }}>
-								<Text style={{textAlign: 'center',  color: 'red', fontSize: 40, fontFamily: 'Montserrat-Bold'}}> STRIKED OUT! </Text>
-								<Text style={{textAlign: 'center',  color: 'red', fontSize: 45, fontFamily: 'Montserrat-Light'}}> XXX </Text>
-							</View>
-						</Modal>
-					}			
+					<Modal isVisible={this.state.strikes>=3 && this.state.displayStrike}
+						onBackdropPress={() => this.setState({displayStrike: false, strikes: 0})}
+						deviceWidth={this.deviceWidth}
+						deviceHeight={this.deviceHeight}>
+						<View style={{ flex: 0.3, backgroundColor: 'white', display: 'flex', justifyContent: "center", alignItems: "center" }}>
+							<Text style={{textAlign: 'center',  color: 'red', fontSize: 40, fontFamily: 'Montserrat-Bold'}}> STRIKED OUT! </Text>
+							<Text style={{textAlign: 'center',  color: 'red', fontSize: 45, fontFamily: 'Montserrat-Light'}}> XXX </Text>
+						</View>
+					</Modal>
+
                 </SafeAreaView>
             </LinearGradient>
 

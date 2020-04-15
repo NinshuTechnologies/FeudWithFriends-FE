@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import styles from './Timer.css'
 
-const TIME_PER_QUESTION=60;
+const TIME_PER_QUESTION=30;
 
 class Timer extends Component {
     
@@ -39,7 +39,7 @@ class Timer extends Component {
         }
         if(this.props.resetTimer!=prevProps.resetTimer && this.props.resetTimer) {
             this.setState({
-                timeLeft: 60
+                timeLeft: TIME_PER_QUESTION
             });
             this.props.turnOffResetTimer();
         }
@@ -47,7 +47,6 @@ class Timer extends Component {
 
     componentWillUnmount() {
         clearInterval(this.timer);
-        console.log("componentWillUnmount called, state = ", this.state.shouldStartTimer, this.state.timeLeft);
     }
 
     render() {

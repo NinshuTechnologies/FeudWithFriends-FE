@@ -19,13 +19,13 @@
     flex-direction: row;
     justify-content: center;
     border-radius: 20px 0 20px 0;
-    background-color: rgba(255, 255, 255,0.8)
+    background-color: rgba(255, 255, 255,0.8);
 }
 
 .Text {
     font-size: 17px;
     text-align: center;
-    font-family: 'Play-Bold';
+    font-family: 'Montserrat-Light';
     color: #000;
 }
 
