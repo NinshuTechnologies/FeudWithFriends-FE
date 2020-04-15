@@ -9,10 +9,10 @@ const AnswerBoard = (props)=> {
             {
                 props.answerListObject.map(answerObject=> {
                     return (
-                    <TouchableOpacity key={"key_" +  answerObject.id}>
-                        <Answer isAnswered={answerObject.isAnswered} 
+                    // <TouchableOpacity key={"key_" +  answerObject.id}>
+                        <Answer key={"key_" +  answerObject.id} isAnswered={answerObject.isAnswered} 
                         answer={answerObject.displayAnswer} points={answerObject.points} id={answerObject.id}/>
-                    </TouchableOpacity>
+                    // </TouchableOpacity>
                     )
                 })
             }
